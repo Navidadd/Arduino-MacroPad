@@ -87,6 +87,15 @@ int currentState = 0;
 int lastDebounceTime = 0;
 const int debounceTime = 50;
 
+// Variables de Cronometro
+const int INTERVALO_RESTO = 50; 
+const int DURACION_RESTO = 10; 
+unsigned long tiempo_inicial = 0; 
+unsigned long tiempo_actual = 0; 
+unsigned long tiempo_transcurrido = 0; 
+bool cronometro_corriendo = false; 
+bool mostrar_resto = false;
+
 //Encoder
 int SW = 14;
 int DT = 16;
@@ -283,72 +292,69 @@ void Layout2(char button){
 }
 
 void Layout3(char button){
-  switch(button){
+  lcd.clear();
+  switch(button) {
     case '1':
-      Keyboard.print('7');
+      tiempo_inicial = millis(); 
+      cronometro_corriendo = true; 
       break;
-    case '2':
-      Keyboard.print('8');
+
+    case '2': 
+      tiempo_transcurrido += millis() + tiempo_inicial; 
+      cronometro_corriendo = false; 
       break;
-    case '3':
-      Keyboard.print('9');
+
+    case '3': 
+      tiempo_inicial = 0; 
+      tiempo_transcurrido = 0; 
+      cronometro_corriendo = false; 
+      mostrar_resto = false; 
+      //lcd.clear(); 
       break;
-    case '4':
-      Keyboard.print('4');
-      break;
-    case '5':
-      Keyboard.print('5');
-      break;
-    case '6':
-      Keyboard.print('6');
-      break;
-    case '7':
-      Keyboard.print('1');
-      break;
-    case '8':
-      Keyboard.print('2');
-      break;
-    case '9':
-      Keyboard.print('3');
-      break;
-  };
+  }
 }
 
 void Layout4(char button){
-  switch(button){
-    case '1':
-      Keyboard.print('1');
-      break;
-    case '2':
-      Keyboard.print('2');
-      break;
-    case '3':
-      Keyboard.print('3');
-      break;
-    case '4':
-      Keyboard.print('4');
-      break;
-    case '5':
-      Keyboard.print('5');
-      break;
-    case '6':
-      Keyboard.print('6');
-      break;
-    case '7':
-      Keyboard.print('7');
-      break;
-    case '8':
-      Keyboard.print('8');
-      break;
-    case '9':
-      Keyboard.print('9');
-      break;
-  };
+  
+}
+
+void PrintCronometro(){
+    tiempo_actual = millis(); 
+    tiempo_transcurrido = tiempo_actual - tiempo_inicial;
+
+    int horas = tiempo_transcurrido / 3600000; 
+    int minutos = (tiempo_transcurrido / 60000) % 60;
+    int segundos = (tiempo_transcurrido / 1000) % 60;
+    lcd.setCursor(0, 0); 
+    lcd.print("Time: ");
+    lcd.print(horas);
+    Serial.print(horas);
+    lcd.print(":");
+    if(minutos < 10) {
+      lcd.print("0"); 
+    }
+    lcd.print(minutos);
+    lcd.print(":");
+    if (segundos < 10) {
+    lcd.print("0");
+    }
+    lcd.println(segundos);
+    
+    if (tiempo_transcurrido / 60000 % INTERVALO_RESTO == 0 && !mostrar_resto) {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Descanso");
+      mostrar_resto = true;
+    }
+    if (tiempo_transcurrido / 60000 % INTERVALO_RESTO == DURACION_RESTO && mostrar_resto) {
+      lcd.clear();
+      cronometro_corriendo = true;
+      tiempo_inicial = millis();
+      mostrar_resto = false;
+    }
 }
 
 void loop() {
-  
-  //check the key matrix first
   char key = kpd.getKey();
   LayoutPrint();
   if(key) {
@@ -384,6 +390,11 @@ void loop() {
     }
   }
 
+   //cronometro del layout3
+  if(cronometro_corriendo) {
+    PrintCronometro();
+  }
+  
   //check the encoder button
   if(encoderButton.update()) {
     if(encoderButton.fallingEdge()) {
