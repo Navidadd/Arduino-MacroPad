@@ -1,6 +1,3 @@
-#include <Keypad.h>
-#include <Encoder.h>
-#include <Bounce2.h>  
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include "HID-Project.h"
@@ -57,6 +54,28 @@ byte Folder[] = {
   B11111,
   B00000
 };
+
+byte coffeLeft[8] = {
+  0b01001,
+  0b00100,
+  0b00000,
+  0b11111,
+  0b10000,
+  0b10000,
+  0b01000,
+  0b00111
+};
+
+byte coffeRight[8] = {
+  0b00000,
+  0b10000,
+  0b00000,
+  0b11110,
+  0b00101,
+  0b00110,
+  0b01000,
+  0b10000
+};
 //Keypad buttons
 int R1 = 5;
 int R2 = 6;
@@ -80,19 +99,24 @@ Keypad kpd = Keypad( makeKeymap(keys), colPins, rowPins, COLS, ROWS);
 int S1 = 21;
 int S2 = 20;
 
-const int numStates = 2;
+const int numStates = 3;
 const int States[numStates] = {S1, S2};
 int currentState = 0;
 
 int lastDebounceTime = 0;
 const int debounceTime = 50;
 
-// Variables de Cronometro
-const int INTERVALO_RESTO = 50; 
-const int DURACION_RESTO = 10; 
+// Variables Cronometro
+const int INTERVALO_REST = 50; 
+const int Hasta_REST = 60; 
 unsigned long tiempo_inicial = 0; 
 unsigned long tiempo_actual = 0; 
-unsigned long tiempo_transcurrido = 0; 
+unsigned long tiempo_transcurrido = 0;
+unsigned int horas = 0;
+unsigned int minutos = 0;
+unsigned int segundos = 0;
+unsigned int centesimos =0;
+unsigned int milisegundos;
 bool cronometro_corriendo = false; 
 bool mostrar_resto = false;
 
@@ -118,6 +142,8 @@ void setup() {
   lcd.createChar(2, LeftArrow); // Left arrow create
   lcd.createChar(3, RightArrow); // Right arrow create
   lcd.createChar(4, Folder); // Folder create
+  lcd.createChar(5, coffeLeft);
+  lcd.createChar(6, coffeRight);
 
   pinMode(CLK, INPUT_PULLUP);
   
@@ -149,38 +175,45 @@ void LayoutPrint(){
 
 void LcdPrint2(int key){
   lcd.clear();
-  lcd.setCursor(0,1);
+
   switch(key){
     case 1:
+      lcd.setCursor(0,1);
       lcd.print("Left ");
       lcd.write(byte(2));
       break;
     case 2:
+      lcd.setCursor(0,1);
       lcd.print("Down ");
       lcd.write(byte(1));
       break;
     case 3:
+      lcd.setCursor(0,1);
       lcd.print("Right ");
       lcd.write(byte(3));
       break;
     case 4:
+      lcd.setCursor(0,1);
       lcd.print("Delete");
       break;
     case 5:
+      lcd.setCursor(0,1);
       lcd.print("Up ");
       lcd.write(byte(0));
       break;
     case 6:
+      lcd.setCursor(0,1);
       lcd.print("Supr");
       break;
     case 7:
+      lcd.setCursor(0,1);
       lcd.print("Esc");
       break;
     case 8:
-      lcd.print("Left Select");
+      
       break;
     case 9:
-      lcd.print("Right Select");
+      
       break;
   }
 }
@@ -238,55 +271,70 @@ void Layout1(char button){
   };
 }//
 void Layout2(char button){
+  lcd.clear();
   switch(button){
     case '1':
       Keyboard.press(KEY_LEFT);
       Keyboard.releaseAll();
-      LcdPrint2(1);
+      lcd.setCursor(0,1);
+      lcd.print("Left ");
+      lcd.write(byte(2));
       break;
     case '2':
       Keyboard.press(KEY_DOWN);
       Keyboard.releaseAll();
-      LcdPrint2(2);
+      lcd.setCursor(0,1);
+      lcd.print("Down ");
+      lcd.write(byte(1));
       break;
     case '3':
       Keyboard.press(KEY_RIGHT);
       Keyboard.releaseAll();
+      lcd.setCursor(0,1);
+      lcd.print("Right ");
+      lcd.write(byte(3));
       LcdPrint2(3);
       break;
     case '4':
       Keyboard.press(KEY_BACKSPACE);
       Keyboard.releaseAll();
-      LcdPrint2(4);
+      lcd.setCursor(0,1);
+      lcd.print("Delete");
       break;
     case '5':
       Keyboard.press(KEY_UP);
       Keyboard.releaseAll();
-      LcdPrint2(5);
+      lcd.setCursor(0,1);
+      lcd.print("Up ");
+      lcd.write(byte(0));
       break;
     case '6'://
       Keyboard.press(KEY_DELETE);
       Keyboard.releaseAll();
-      LcdPrint2(6);
+      lcd.setCursor(0,1);
+      lcd.print("Supr");
       break;
     case '7'://
       Keyboard.press(KEY_ESC);
       Keyboard.releaseAll();
-      LcdPrint2(7);
+      lcd.setCursor(0,1);
+      lcd.print("Esc");
       break;
     case '8':
-    Keyboard.press(KEY_RIGHT_CTRL);
-    Keyboard.press(KEY_RIGHT_SHIFT);
-    Keyboard.press(KEY_LEFT);
-    Keyboard.releaseAll();
-    LcdPrint2(8);
+      Keyboard.press(KEY_RIGHT_CTRL);
+      Keyboard.press(KEY_RIGHT_SHIFT);
+      Keyboard.press(KEY_LEFT);
+      lcd.setCursor(0,1);
+      lcd.print("Left Select");
+      Keyboard.releaseAll();
       break;
     case '9':
     Keyboard.press(KEY_RIGHT_CTRL);
     Keyboard.press(KEY_RIGHT_SHIFT);
     Keyboard.press(KEY_RIGHT);
     Keyboard.releaseAll();
-    LcdPrint2(9);
+    lcd.setCursor(0,1);
+    lcd.print("Right Select");
       break;
   };
 }
@@ -300,16 +348,11 @@ void Layout3(char button){
       break;
 
     case '2': 
-      tiempo_transcurrido += millis() + tiempo_inicial; 
-      cronometro_corriendo = false; 
-      break;
-
-    case '3': 
       tiempo_inicial = 0; 
       tiempo_transcurrido = 0; 
       cronometro_corriendo = false; 
       mostrar_resto = false; 
-      //lcd.clear(); 
+      //lcd.clear();
       break;
   }
 }
@@ -321,38 +364,57 @@ void Layout4(char button){
 void PrintCronometro(){
     tiempo_actual = millis(); 
     tiempo_transcurrido = tiempo_actual - tiempo_inicial;
-
-    int horas = tiempo_transcurrido / 3600000; 
-    int minutos = (tiempo_transcurrido / 60000) % 60;
-    int segundos = (tiempo_transcurrido / 1000) % 60;
-    lcd.setCursor(0, 0); 
-    lcd.print("Time: ");
-    lcd.print(horas);
-    Serial.print(horas);
-    lcd.print(":");
-    if(minutos < 10) {
-      lcd.print("0"); 
-    }
-    lcd.print(minutos);
-    lcd.print(":");
-    if (segundos < 10) {
-    lcd.print("0");
-    }
-    lcd.println(segundos);
     
-    if (tiempo_transcurrido / 60000 % INTERVALO_RESTO == 0 && !mostrar_resto) {
+    horas = tiempo_transcurrido / 3600000; 
+    minutos = (tiempo_transcurrido / 60000) % 60;
+    segundos = (tiempo_transcurrido / 1000) % 60;
+    
+      if(tiempo_actual % 10 == 0){
       lcd.clear();
-      lcd.setCursor(0, 0);
+      centesimos++;
+      if(centesimos == 100){
+      centesimos = 0;
+      segundos++;
+      }
+      if(segundos == 60){
+      segundos = 0;
+      minutos++;
+      }
+      if(minutos == 60){
+      minutos = 0;
+      horas++;
+      }
+      lcd.setCursor(0,0);
+      if(horas < 10){
+      lcd.print("0");
+      }
+      lcd.print(horas);
+      lcd.print(":");
+
+      if(minutos < 10){
+      lcd.print("0");
+      }
+      lcd.print(minutos);
+      lcd.print(":");
+      
+      if(segundos < 10){
+      lcd.print("0");
+      }
+      lcd.print(segundos);}
+
+    if (minutos >= INTERVALO_REST && minutos < Hasta_REST) {
+      lcd.setCursor(0, 1);
       lcd.print("Descanso");
-      mostrar_resto = true;
+      //imprimir el caffe :)
+      lcd.setCursor(11,0);
+      lcd.write(byte(5));
+      lcd.setCursor(12,0);
+      lcd.write(byte(6));
     }
-    if (tiempo_transcurrido / 60000 % INTERVALO_RESTO == DURACION_RESTO && mostrar_resto) {
-      lcd.clear();
-      cronometro_corriendo = true;
-      tiempo_inicial = millis();
-      mostrar_resto = false;
-    }
+
 }
+
+
 
 void loop() {
   char key = kpd.getKey();
@@ -390,11 +452,11 @@ void loop() {
     }
   }
 
-   //cronometro del layout3
+  //cronometro del layout3
   if(cronometro_corriendo) {
     PrintCronometro();
   }
-  
+
   //check the encoder button
   if(encoderButton.update()) {
     if(encoderButton.fallingEdge()) {
