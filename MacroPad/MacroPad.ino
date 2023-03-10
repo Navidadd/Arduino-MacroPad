@@ -1,7 +1,9 @@
+#include <Keypad.h>
+#include <Encoder.h>
+#include <Bounce2.h>  
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include "HID-Project.h"
-
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 byte UpArrow[] = {
