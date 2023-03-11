@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include "HID-Project.h"
 
+
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 byte UpArrow[] = {
   B00100,
@@ -157,11 +158,11 @@ void setup() {
 }
 
 void LcdPrint(int key){
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("Key :");
-      lcd.print(key);
-      lcd.setCursor(0,1);
+      //lcd.clear();
+      //lcd.setCursor(0,0); //posicionar linea 1
+      //lcd.print("Key :");
+      //lcd.print(key);
+      lcd.setCursor(0,1);  //posicionar linea 2
       lcd.print("Write :");
       lcd.print(key);
 }
@@ -372,7 +373,7 @@ void PrintCronometro(){
     segundos = (tiempo_transcurrido / 1000) % 60;
     
       if(tiempo_actual % 10 == 0){
-      lcd.clear();
+      //lcd.clear();
       centesimos++;
       if(centesimos == 100){
       centesimos = 0;
@@ -405,7 +406,7 @@ void PrintCronometro(){
       lcd.print(segundos);}
 
     if (minutos >= INTERVALO_REST && minutos < Hasta_REST) {
-      lcd.setCursor(0, 1);
+      lcd.setCursor(0, 1);  // linea 2
       lcd.print("Descanso");
       //imprimir el caffe :)
       lcd.setCursor(11,0);
@@ -439,6 +440,7 @@ void loop() {
       default:
         switch(currentState){
           case 0:
+            //lcd.setCursor(0,1);  // linea 2
             Layout1(key);
             break;
           case 1:
