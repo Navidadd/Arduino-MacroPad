@@ -15,7 +15,7 @@
 <p>1. the number between square brackets at the bottom right of the screen indicates the current Layout</p>
 <p>2. When you press a key, the screen shows the action performed by the key. If you press 1, the screen shows "Write : 1".</p>
 <p>3. The encoder raises and lowers the volume, and the enconder buttom pause and resproduce the current music/video you are listening/watching.</p>
-
+<p>4. The potentiometer beside the screen affects the brightness.
 ### Layout 0
 <img align="middle" alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492024-69b9112b-e04f-489f-b035-f65d854c3937.png"/>
 
