@@ -2,18 +2,19 @@
 
 <p>My Macro Keypad designed to be a useful companion when writing and coding.</p>
 
-<img align="right" width="414" height="621" src="https://user-images.githubusercontent.com/126533647/226480433-d70dc550-3d1e-4a78-a65e-febe8cf4b581.JPG">
-
-
-<p align="center">
-  <img width="613" height="408" src="https://user-images.githubusercontent.com/126533647/226483961-d9622e2f-f48f-4b2b-9a5b-7f11117ad3c7.JPG">
-</p>
+<img align="right" width="406" height="491" src="https://user-images.githubusercontent.com/126533647/227629839-43489e52-1c06-407c-9718-7a9a9b17ba11.jpg">
+<br><br><br><br><br>
 
 ## Current Program
 <p>1. The number between square brackets at the bottom right of the screen indicates the current Layout</p>
 <p>2. When you press a key, the screen shows the action performed by the key. If you press 1, the screen shows "Write : 1".</p>
 <p>3. The encoder raises and lowers the volume, and the enconder buttom pause and resproduce the current music/video you are listening/watching.</p>
 <p>4. The potentiometer beside the screen affects the brightness.</p>
+<br><br><br><br>
+<hr>
+<br>
+<img align="middle" alt="Mode1" width="800px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226483961-d9622e2f-f48f-4b2b-9a5b-7f11117ad3c7.JPG"/>
+
 
 <table border="0">
  <tr>
@@ -59,16 +60,8 @@
 
 
 ### Layout 2
-<p> Used To study</p>
+<p> Has a Timer used to study 50 min, and rest 10 min </p>
 
+<p> 1: Starts the timer </p>
+<p> 2: Stops the timer </p>
 
- <body>
-    <div class="column" style="background-color:red;">
-        <h2>Column 1</h2>
-        <p>Data..</p>
-    </div>
-    <div class="column" style="background-color:blue;">
-        <h2>Column 2</h2>
-        <p>Data..</p>
-    </div>
-</body>
