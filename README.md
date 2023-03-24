@@ -13,7 +13,7 @@
 <br><br><br><br>
 <hr>
 <br>
-<img alt="Mode1" width="800px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226483961-d9622e2f-f48f-4b2b-9a5b-7f11117ad3c7.JPG"/>
+<img align="center" alt="Mode1" width="800px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226483961-d9622e2f-f48f-4b2b-9a5b-7f11117ad3c7.JPG"/>
 
 
 <table border="0">
@@ -22,7 +22,7 @@
     <td><b style="font-size:30px">Title 2</b></td>
  </tr>
  <tr>
-    <td><alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492024-69b9112b-e04f-489f-b035-f65d854c3937.png"/></td>
+    <td><img align="center" alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492024-69b9112b-e04f-489f-b035-f65d854c3937.png"/></td>
     <td><p> 1: writes "1" </p>
 <p> 2: writes "2" </p>
 <p> 3: writes "3" </p>
@@ -43,7 +43,7 @@
     <td><b style="font-size:30px">Title 2</b></td>
  </tr>
  <tr>
-    <td><alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492149-ac95717b-47b6-4b36-a728-80a77e8858c8.png"/></td>
+    <td><img align="center" alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492149-ac95717b-47b6-4b36-a728-80a77e8858c8.png"/></td>
     <td><p> 1: Left Arrow Key </p>
 <p> 2: Down Arrow Key </p>
 <p> 3: Right Arrow Key </p>
