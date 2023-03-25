@@ -1,4 +1,4 @@
-# ArduinoMacroPad
+# Arduino MacroPad
 
 <p>Macro Keypad designed to be a useful companion when writing and coding.</p>
 
