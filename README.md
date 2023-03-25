@@ -1,6 +1,6 @@
 # ArduinoMacroPad
 
-<p>My Macro Keypad designed to be a useful companion when writing and coding.</p>
+<p>Macro Keypad designed to be a useful companion when writing and coding.</p>
 
 <img align="right" width="406" height="491" src="https://user-images.githubusercontent.com/126533647/227629839-43489e52-1c06-407c-9718-7a9a9b17ba11.jpg">
 <br><br><br><br>
@@ -19,7 +19,7 @@
 <table border="0">
  <tr>
     <td><b style="font-size:30px">Layout 0</b></td>
-    <td><b style="font-size:30px">Title 2</b></td>
+    <td><b style="font-size:30px">Actions</b></td>
  </tr>
  <tr>
     <td><img align="center" alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492024-69b9112b-e04f-489f-b035-f65d854c3937.png"/></td>
@@ -40,7 +40,7 @@
 <table border="0">
  <tr>
     <td><b style="font-size:30px">Layout 1</b></td>
-    <td><b style="font-size:30px">Title 2</b></td>
+    <td><b style="font-size:30px">Actions</b></td>
  </tr>
  <tr>
     <td><img align="center" alt="Mode1" width="210px" style="padding-top:10px;" src="https://user-images.githubusercontent.com/126533647/226492149-ac95717b-47b6-4b36-a728-80a77e8858c8.png"/></td>
