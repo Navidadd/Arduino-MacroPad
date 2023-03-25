@@ -3,7 +3,7 @@
 <p>My Macro Keypad designed to be a useful companion when writing and coding.</p>
 
 <img align="right" width="406" height="491" src="https://user-images.githubusercontent.com/126533647/227629839-43489e52-1c06-407c-9718-7a9a9b17ba11.jpg">
-<br><br><br><br><br>
+<br><br><br><br>
 
 ## Current Program
 <p>1. The number between square brackets at the bottom right of the screen indicates the current Layout</p>
@@ -60,7 +60,7 @@
 
 
 ### Layout 2
-<p> Has a Timer used for study 50 min, and rest 10 min </p>
+<p> Has a Timer used to measure study time.. 50 min of study, and rest 10 min </p>
 
 <p> 1: Starts the timer </p>
 <p> 2: Stops the timer </p>
